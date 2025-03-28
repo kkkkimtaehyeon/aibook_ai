@@ -17,6 +17,7 @@ class StoryGenerateResponse(BaseModel):
 class VoiceCloningRequest(BaseModel):
     audio_url: str = Field(..., alias='audioUrl')
     story_page_map: Dict[int, str] = Field(..., alias='storyPageMap')
+    webhook_url: str = Field(..., alias='webhookUrl')
 
 
 class VoiceCloningResponse(BaseModel):
