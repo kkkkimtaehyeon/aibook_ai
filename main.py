@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from router import story_router, voice_cloning_router
+
+from api import story_router, voice_cloning_router, image_generation_router, health_router
+
+# from api import story_router
+
 app = FastAPI()
 
 app.add_middleware(
@@ -13,3 +17,5 @@ app.add_middleware(
 
 app.include_router(story_router.router)
 app.include_router(voice_cloning_router.router)
+app.include_router(image_generation_router.router)
+app.include_router(health_router.router)

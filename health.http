@@ -1,0 +1,10 @@
+#
+#### redis health check
+#GET http://127.0.0.1:8000/health/redis
+
+
+### redis set test
+POST http://127.0.0.1:8000/redis/set
+
+### redis get test
+GET http://127.0.0.1:8000/redis/get
