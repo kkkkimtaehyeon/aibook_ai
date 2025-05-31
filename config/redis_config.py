@@ -5,10 +5,10 @@ import redis.asyncio as redis
 
 _ = load_dotenv(find_dotenv())
 
-HOST = os.getenv("REDIS_HOST")
-PORT = os.getenv("REDIS_PORT")
-DB = os.getenv("REDIS_DB")
-USERNAME = os.getenv("REDIS_USERNAME")
-PASSWORD = os.getenv("REDIS_PASSWORD")
+HOST = os.getenv("redis_host")
+PORT = os.getenv("redis_port")
+DB = os.getenv("redis_db_ai")
+USERNAME = os.getenv("redis_username")
+PASSWORD = os.getenv("redis_password")
 
 redis_client = redis.Redis(host=HOST, port=PORT, username=USERNAME, db=DB, password=PASSWORD)
