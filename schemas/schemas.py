@@ -32,6 +32,9 @@ class DubbingRequest(BaseModel):
     story_page_map: Dict[int, DubbingContentAndPreSignedUrl] = Field(..., alias='storyPageMap')
     webhook_url: str = Field(..., alias='webhookUrl')
 
+class DubbingResponse(BaseModel):
+    story_dubbing_map: Dict[int, str] = Field(..., alias='dubbingMap')
+
 
 class VoiceCloningResponse(BaseModel):
     story_dubbing_dict: Dict[int, str] = Field(..., alias='storyDubbingMap')

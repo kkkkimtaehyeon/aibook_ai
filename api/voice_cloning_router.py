@@ -94,18 +94,12 @@ async def process_dubbing_v2(request: DubbingRequest):
 async def process_dubbing_v3(request: DubbingRequest):
     zyphra = Zyphra(api_key)
     base64_audio = zyphra.get_base64_audio(request.voice_audio_url)
-    total_tts_time = 0
     tasks = []
 
     async with httpx.AsyncClient() as client:
         async def process_page(page_id, content, pre_signed_url):
-            nonlocal total_tts_time
             try:
-                start = time.time()
                 audio_bytes: bytes = await zyphra.generate_speech_async(base64_audio, content)
-                end = time.time()
-                total_tts_time += end - start
-                logger.debug(f"audio generated: {content}")
 
                 response = await client.put(pre_signed_url, content=audio_bytes, headers={"Content-Type": "audio/wav"})
                 if response.status_code != 200:
@@ -122,6 +116,4 @@ async def process_dubbing_v3(request: DubbingRequest):
         # 병렬 실행
         await asyncio.gather(*tasks)
 
-        # 완료 알림
-        logger.debug(f"Total TTS processing time: {total_tts_time} seconds")
-        await client.post(request.webhook_url, json={"status": "completed"})
+        await client.post(request.webhook_url, json={"status": "200"})
