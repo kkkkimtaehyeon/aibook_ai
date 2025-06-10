@@ -1,7 +1,5 @@
 from fastapi import APIRouter
 
-from fastapi import APIRouter
-
 from repository.StoryRepository import StoryRepository
 from repository.interface.StoryRepositoryInterface import StoryRepositoryInterface
 from schemas.schemas import StoryGenerateRequestV2
@@ -16,7 +14,7 @@ def get_story_generate_service_v2():
     return story_service_v2
 
 
-@router.post("/v2/ai/stories/{story_id}/pages/{page_number}/generate")
+@router.post("/ai/v2/stories/{story_id}/pages/{page_number}/generate")
 async def generate_story_v2(story_id: str, page_number: int, request: StoryGenerateRequestV2):
     if page_number == 1:
         # 1페이지일 때는 base_story가 필요.

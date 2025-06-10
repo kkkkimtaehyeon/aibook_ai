@@ -4,6 +4,7 @@ from openai import OpenAI
 
 from repository.interface.StoryRepositoryInterface import StoryRepositoryInterface
 from schemas.schemas import StoryInitRequest, StoryGenerateRequest, StoryGenerateResponse
+from service.StoryGenerationServiceV2 import TempStory
 from service.interface.StoryGenerationServiceInterface import StoryGenerationServiceInterface, Story
 
 
@@ -44,7 +45,8 @@ class StoryGenerationService(StoryGenerationServiceInterface):
         sentence_options = self._generate_sentences_for_page(story, page_number + 1)
         return StoryGenerateResponse(sentenceOptions=sentence_options)
 
-    def generate_image_generation_prompt(self, source: str) -> str:
+    def generate_image_generation_prompt(self, story: TempStory) -> str:
+        source = ', '.join(story.contents)
         messages = self.get_image_generation_prompt(source)
         response = self._generate_response(messages)
         return response["prompt"]
@@ -71,9 +73,9 @@ class StoryGenerationService(StoryGenerationServiceInterface):
         
                     source: """{source}"""
         
-                    반드시 다음 json 형식으로만 응답해:
+                    반드시 영어로 다음 json 형식으로만 응답해:
                     {{
-                      "prompt": "이미지 생성 프롬프트 내용"
+                      "prompt": "image generation prompt"
                     }}
                     '''.strip()}
         ]

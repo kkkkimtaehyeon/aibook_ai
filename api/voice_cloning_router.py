@@ -20,21 +20,21 @@ api_key = os.getenv("ZYPHRA_API_KEY")
 
 
 # 백그라운드에서 더빙 처리하고 우선 202 응답
-@router.post('/v1/api/voice-cloning', status_code=202)
+@router.post('/ai/v1/voice-cloning', status_code=202)
 async def voice_cloning(request: DubbingRequest, background_tasks: BackgroundTasks):
     background_tasks.add_task(process_dubbing_v2, request)
     logger.debug(f"Voice cloning request received: webhook url: {request.webhook_url}")
     return
 
 
-@router.post('/v2/api/voice-cloning', status_code=202)
+@router.post('/ai/v2/voice-cloning', status_code=202)
 async def voice_cloning(request: VoiceCloningRequest, background_tasks: BackgroundTasks):
     background_tasks.add_task(process_dubbing_v1, request)
     logger.debug(f"Voice cloning request received: webhook url: {request.webhook_url}")
     return
 
 
-@router.post('/v3/api/voice-cloning', status_code=202)
+@router.post('/ai/v3/voice-cloning', status_code=202)
 async def voice_cloning(request: DubbingRequest, background_tasks: BackgroundTasks):
     background_tasks.add_task(process_dubbing_v3, request)
     logger.debug(f"Voice cloning request received: webhook url: {request.webhook_url}")
