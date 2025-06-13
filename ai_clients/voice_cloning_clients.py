@@ -1,3 +1,19 @@
+from abc import ABC, abstractmethod
+
+
+class VoiceCloningClient(ABC):
+    @abstractmethod
+    async def clone_voice(self):
+        pass
+
+
+class ZonosVoiceCloneClient(VoiceCloningClient):
+    async def clone_voice(self):
+        pass
+
+
+
+
 import base64
 import os
 import requests
