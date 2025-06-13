@@ -1,19 +1,6 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 
 from pydantic import BaseModel, Field
-
-
-class StoryGenerateRequestOld(BaseModel):
-    selected_content: str = Field(..., alias='selectedContent')
-    # source: str = Field(..., alias='source')
-
-    page_number: int = Field(..., alias='pageNumber')
-
-
-class StoryGenerateResponseOld(BaseModel):
-    content_option_1: str = Field(..., alias='contentOption1')
-    content_option_2: str = Field(..., alias='contentOption2')
-    content_option_3: str = Field(..., alias='contentOption3')
 
 
 class VoiceCloningRequest(BaseModel):
@@ -32,24 +19,9 @@ class DubbingRequest(BaseModel):
     story_page_map: Dict[int, DubbingContentAndPreSignedUrl] = Field(..., alias='storyPageMap')
     webhook_url: str = Field(..., alias='webhookUrl')
 
-class DubbingResponse(BaseModel):
-    story_dubbing_map: Dict[int, str] = Field(..., alias='dubbingMap')
-
 
 class VoiceCloningResponse(BaseModel):
     story_dubbing_dict: Dict[int, str] = Field(..., alias='storyDubbingMap')
-
-
-class StoryInitializationRequest(BaseModel):
-    base_story: str = Field(..., alias='baseStory')
-
-
-class StoryInitRequest(BaseModel):
-    base_story: str = Field(..., alias="baseStory")
-
-
-class StoryGenerateRequest(BaseModel):
-    selected_sentence: str = Field(..., alias="selectedSentence")
 
 
 class StoryGenerateRequestV2(BaseModel):
@@ -57,9 +29,11 @@ class StoryGenerateRequestV2(BaseModel):
     selected_sentence: Optional[str] = Field(default=None, alias="selectedSentence")
 
 
-class StoryGenerateResponse(BaseModel):
-    sentence_options: list = Field(..., alias="sentenceOptions")
+class StoryGenerateRequest(BaseModel):
+    base_story: Optional[str] = Field(default=None, alias="baseStory")
+    selected_sentence: Optional[str] = Field(default=None, alias="selectedSentence")
 
 
-class ImageGenerationRequest(BaseModel):
-    contents: list[str] = Field(...)
+class Story(BaseModel):
+    base_story: str
+    contents: List[str] = []
